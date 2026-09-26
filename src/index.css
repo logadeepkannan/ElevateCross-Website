@@ -1,0 +1,152 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans:
+    'Segoe UI Variable', 'Segoe UI', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: 'Space Grotesk', var(--font-sans);
+
+  --color-brand-purple-50: #fdf2fa;
+  --color-brand-purple-100: #fadbf1;
+  --color-brand-purple-300: #f49ada;
+  --color-brand-purple-400: #ec3cba;
+  --color-brand-purple-500: #a40e7a;
+  --color-brand-purple-600: #800a5f;
+  --color-brand-purple-700: #600646;
+
+  --color-brand-teal-400: #fbbf24;
+  --color-brand-teal-500: #f59e0b;
+  --color-brand-teal-600: #d97706;
+
+  --color-brand-emerald-400: #fbbf24;
+  --color-brand-emerald-500: #f59e0b;
+
+  /* Semantic tokens that flip with the .dark class via the raw vars below.
+     Note: never name one of these the same as a Tailwind built-in scale key
+     (e.g. "base" collides with the font-size scale's `base` and silently
+     makes `text-base` also set `color`), so this one is "canvas" not "base". */
+  --color-canvas: var(--v-base);
+  --color-surface: var(--v-surface);
+  --color-surface-alt: var(--v-surface-alt);
+  --color-primary: var(--v-text-primary);
+  --color-secondary: var(--v-text-secondary);
+  --color-muted: var(--v-text-muted);
+  --color-subtle: var(--v-border-subtle);
+  --color-strong: var(--v-border-strong);
+
+  --animate-marquee: marquee 32s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+}
+
+:root {
+  --v-base: #fafbfe;
+  --v-surface: #ffffff;
+  --v-surface-alt: #f4f6fc;
+  --v-text-primary: #10131c;
+  --v-text-secondary: #4b5169;
+  --v-text-muted: #767c96;
+  --v-border-subtle: #e6e9f4;
+  --v-border-strong: #d3d8ec;
+}
+
+.dark {
+  --v-base: #07080f;
+  --v-surface: #0e1120;
+  --v-surface-alt: #131629;
+  --v-text-primary: #f3f4fb;
+  --v-text-secondary: #b8bcd6;
+  --v-text-muted: #83889f;
+  --v-border-subtle: #1f2338;
+  --v-border-strong: #2a2f4a;
+}
+
+@layer base {
+  * {
+    border-color: var(--v-border-subtle);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--v-base);
+    color: var(--v-text-primary);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--color-brand-purple-500);
+    color: white;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand-purple-500);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .gradient-brand {
+    background-image: linear-gradient(120deg, var(--color-brand-purple-500), var(--color-brand-teal-600));
+  }
+
+  .gradient-brand-text {
+    background-image: linear-gradient(120deg, var(--color-brand-purple-500), var(--color-brand-teal-600));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  .glass-panel {
+    background-color: color-mix(in srgb, var(--v-surface) 72%, transparent);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .grid-fade {
+    background-image:
+      linear-gradient(to right, var(--v-border-subtle) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--v-border-subtle) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, black 40%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, black 40%, transparent 100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
